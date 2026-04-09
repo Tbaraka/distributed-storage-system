@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="6YCmqtK8JbPT3mWsmtPT">
+    <mxGraphModel dx="808" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Client Script&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Node 2:&lt;div&gt;Flask+Python Dictionary&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="100" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-10" edge="1" parent="1" source="Quu3lYOWxo9RDga-Q2he-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Quu3lYOWxo9RDga-Q2he-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="POST/keys/DST" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Node3:&lt;div&gt;PythonDictionary{}+Flask&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="600" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-7" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="260" as="sourcePoint" />
+            <mxPoint x="400" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ExRc1uzS4W30OS8aF4_6-1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="399.83" y="450" as="sourcePoint" />
+            <mxPoint x="399.83" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Node1:&lt;div&gt;Flask,Python Dictionary {},&lt;/div&gt;&lt;div&gt;Replication Layer&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="340" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="Quu3lYOWxo9RDga-Q2he-12" edge="1" parent="1" source="Quu3lYOWxo9RDga-Q2he-2" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;edgeStyle=elbowEdgeStyle;elbow=vertical;" target="Quu3lYOWxo9RDga-Q2he-5" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="550" as="sourcePoint" />
+            <mxPoint x="450" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ExRc1uzS4W30OS8aF4_6-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Replicate (POST/DELETE)" vertex="1">
+          <mxGeometry height="30" width="60" x="420" y="470" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

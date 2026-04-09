@@ -1,0 +1,39 @@
+### Health Node 1
+GET http://127.0.0.1:5001/health
+
+### Health Node 2
+GET http://127.0.0.1:5002/health
+
+### Health Node 3
+GET http://127.0.0.1:5003/health
+### Store username
+POST http://127.0.0.1:5001/keys/Distributed System
+Content-Type: application/json
+
+{"value": "Final Group 4 Project "}
+### Read from Node 1
+GET http://127.0.0.1:5001/keys/Distributed System
+
+### Read from Node 2
+GET http://127.0.0.1:5002/keys/Distributed System
+
+### Read from Node 3
+GET http://127.0.0.1:5003/keys/Distributed System
+### Store course from Node 2
+POST http://127.0.0.1:5002/keys/Group Members 
+Content-Type: application/json
+
+{"value": "TeddyBaraka"}
+### Read course from Node 1
+GET http://127.0.0.1:5001/keys/Group Members 
+
+### Read course from Node 3
+GET http://127.0.0.1:5003/keys/Group Members 
+### List keys Node 1
+GET http://127.0.0.1:5001/keys
+
+### List keys Node 2
+GET http://127.0.0.1:5002/keys
+
+### List keys Node 3
+GET http://127.0.0.1:5003/keys

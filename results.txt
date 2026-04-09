@@ -1,0 +1,85 @@
+
+==================================================
+  STEP 0: Checking Nodes Are Online
+==================================================
+  Node 5001: ONLINE
+  Node 5002: ONLINE
+  Node 5003: ONLINE
+
+  All nodes online. Running metrics...
+
+==================================================
+  METRIC 1: PUT Latency (10 requests)
+==================================================
+  Request  1: 6.24 ms
+  Request  2: 5.44 mas
+  Request  3: 5.06 ms
+  Request  4: 4.93 ms
+  Request  5: 4.86 ms
+  Request  6: 4.95 ms
+  Request  7: 4.86 ms
+  Request  8: 4.98 ms
+  Request  9: 4.68 ms
+  Request 10: 4.70 ms
+--------------------------------------------------
+
+  Average : 5.07 ms
+  Fastest : 4.68 ms
+  Slowest : 6.24 ms
+
+==================================================
+  METRIC 2: GET Latency (10 requests)
+==================================================
+  Request  1: 1.49 ms
+  Request  2: 1.47 ms
+  Request  3: 1.51 ms
+  Request  4: 1.39 ms
+  Request  5: 1.41 ms
+  Request  6: 1.36 ms
+  Request  7: 1.31 ms
+  Request  8: 1.40 ms
+  Request  9: 1.38 ms
+  Request 10: 1.31 ms
+--------------------------------------------------
+
+  Average : 1.40 ms
+  Fastest : 1.31 ms
+  Slowest : 1.51 ms
+
+==================================================
+  METRIC 3: Replication Consistency
+==================================================
+  Node 5001: PASS  =>  value = hello_from_5001
+  Node 5002: PASS  =>  value = hello_from_5001
+  Node 5003: PASS  =>  value = hello_from_5001
+--------------------------------------------------
+
+  Result: 3/3 nodes have correct data
+  Consistency: 100%
+
+==================================================
+  METRIC 4: Availability (30 requests across all nodes)
+==================================================
+  Requests sent    : 30
+  Successful       : 30
+  Failed           : 0
+  Availability     : 100%
+
+==================================================
+  METRIC 5: Replication Speed
+==================================================
+  Write + replicate to peers: 115.15 ms total
+  Replicated to: [5002, 5003]
+
+==================================================
+  SUMMARY — Copy These Into Your Slides
+==================================================
+  PUT latency (avg)      : 5.07 ms
+  GET latency (avg)      : 1.40 ms
+  Replication consistency: 100%
+  System availability    : 100%
+  Replication speed      : 115.15 ms
+==================================================
+
+  Done! All metrics collected.
+

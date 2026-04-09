@@ -1,0 +1,177 @@
+# ============================================================
+#  metrics.py  —  Standalone Metrics Script
+#  No pauses. No demo. Just results.
+#  Run this while all 3 nodes are active.
+# ============================================================
+
+import requests
+import time
+
+BASE = "http://127.0.0.1"
+
+# ---- helpers ----
+def put(port, key, value):
+    try:
+        r = requests.post(f"{BASE}:{port}/keys/{key}", json={"value": value}, timeout=2)
+        return r.json()
+    except:
+        return {"status": "error", "message": "node offline"}
+
+def get(port, key):
+    try:
+        r = requests.get(f"{BASE}:{port}/keys/{key}", timeout=2)
+        return r.json()
+    except:
+        return {"status": "error", "message": "node offline"}
+
+def line():
+    print("-" * 50)
+
+# ============================================================
+#  CHECK: Are nodes online?
+# ============================================================
+print("\n" + "=" * 50)
+print("  STEP 0: Checking Nodes Are Online")
+print("=" * 50)
+
+all_online = True
+for port in [5001, 5002, 5003]:
+    try:
+        r = requests.get(f"{BASE}:{port}/status", timeout=2)
+        if r.status_code == 200:
+            print(f"  Node {port}: ONLINE")
+        else:
+            print(f"  Node {port}: ERROR (bad response)")
+            all_online = False
+    except:
+        print(f"  Node {port}: OFFLINE -- start it first!")
+        all_online = False
+
+if not all_online:
+    print("\n  Some nodes are offline.")
+    print("  Start all 3 nodes first then run this again.\n")
+    exit()
+
+print("\n  All nodes online. Running metrics...\n")
+
+# ============================================================
+#  METRIC 1: PUT Latency
+# ============================================================
+print("=" * 50)
+print("  METRIC 1: PUT Latency (10 requests)")
+print("=" * 50)
+
+put_times = []
+for i in range(10):
+    start = time.time()
+    put(5001, f"metric_key_{i}", f"value_{i}")
+    ms = (time.time() - start) * 1000
+    put_times.append(ms)
+    print(f"  Request {i+1:2d}: {ms:.2f} ms")
+
+print(line() or "")
+print(f"  Average : {sum(put_times)/len(put_times):.2f} ms")
+print(f"  Fastest : {min(put_times):.2f} ms")
+print(f"  Slowest : {max(put_times):.2f} ms")
+
+# ============================================================
+#  METRIC 2: GET Latency
+# ============================================================
+print("\n" + "=" * 50)
+print("  METRIC 2: GET Latency (10 requests)")
+print("=" * 50)
+
+get_times = []
+for i in range(10):
+    start = time.time()
+    get(5001, f"metric_key_{i}")
+    ms = (time.time() - start) * 1000
+    get_times.append(ms)
+    print(f"  Request {i+1:2d}: {ms:.2f} ms")
+
+print(line() or "")
+print(f"  Average : {sum(get_times)/len(get_times):.2f} ms")
+print(f"  Fastest : {min(get_times):.2f} ms")
+print(f"  Slowest : {max(get_times):.2f} ms")
+
+# ============================================================
+#  METRIC 3: Replication Check
+# ============================================================
+print("\n" + "=" * 50)
+print("  METRIC 3: Replication Consistency")
+print("=" * 50)
+
+put(5001, "replication_test", "hello_from_5001")
+time.sleep(0.5)  # give nodes time to replicate
+
+passed = 0
+for port in [5001, 5002, 5003]:
+    r = get(port, "replication_test")
+    if r.get("value") == "hello_from_5001":
+        print(f"  Node {port}: PASS  =>  value = {r.get('value')}")
+        passed += 1
+    else:
+        print(f"  Node {port}: FAIL  =>  {r.get('message', 'wrong value')}")
+
+print(line() or "")
+print(f"  Result: {passed}/3 nodes have correct data")
+print(f"  Consistency: {int((passed/3)*100)}%")
+
+# ============================================================
+#  METRIC 4: Availability
+# ============================================================
+print("\n" + "=" * 50)
+print("  METRIC 4: Availability (30 requests across all nodes)")
+print("=" * 50)
+
+success = 0
+total   = 30
+ports   = [5001, 5002, 5003] * 10  # 10 requests per node
+
+for port in ports:
+    try:
+        r = requests.get(f"{BASE}:{port}/status", timeout=1)
+        if r.status_code == 200:
+            success += 1
+    except:
+        pass
+
+print(f"  Requests sent    : {total}")
+print(f"  Successful       : {success}")
+print(f"  Failed           : {total - success}")
+print(f"  Availability     : {int((success/total)*100)}%")
+
+# ============================================================
+#  METRIC 5: Replication Speed
+# ============================================================
+print("\n" + "=" * 50)
+print("  METRIC 5: Replication Speed")
+print("=" * 50)
+
+start = time.time()
+put(5001, "speed_test", "timing")
+time.sleep(0.1)
+
+found_on = []
+for port in [5002, 5003]:
+    r = get(port, "speed_test")
+    if r.get("value") == "timing":
+        found_on.append(port)
+
+total_ms = (time.time() - start) * 1000
+print(f"  Write + replicate to peers: {total_ms:.2f} ms total")
+print(f"  Replicated to: {found_on}")
+
+# ============================================================
+#  SUMMARY TABLE
+# ============================================================
+print("\n" + "=" * 50)
+print("  SUMMARY — Copy These Into Your Slides")
+print("=" * 50)
+print(f"  PUT latency (avg)      : {sum(put_times)/len(put_times):.2f} ms")
+print(f"  GET latency (avg)      : {sum(get_times)/len(get_times):.2f} ms")
+print(f"  Replication consistency: {int((passed/3)*100)}%")
+print(f"  System availability    : {int((success/total)*100)}%")
+print(f"  Replication speed      : {total_ms:.2f} ms")
+print("=" * 50)
+print("\n  Done! All metrics collected.\n")
